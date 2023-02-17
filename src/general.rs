@@ -15,6 +15,10 @@ use std::ops::SubAssign;
 
 use num_traits::Float;
 use num_traits::Zero;
+#[cfg(feature = "serde_arrays")]
+use serde::Deserialize;
+#[cfg(feature = "serde_arrays")]
+use serde::Serialize;
 
 use crate::array::arr_zip_map;
 use crate::Component;
@@ -24,7 +28,13 @@ use crate::Vector;
 ///
 /// Does not any heap allocation.
 #[derive(Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "serde_arrays", derive(Serialize, Deserialize))]
+#[cfg_attr(
+    feature = "serde_arrays",
+    serde(bound(serialize = "T: Serialize", deserialize = "T: Deserialize<'de>"))
+)]
 pub struct VecND<T, const N: usize> {
+    #[cfg_attr(feature = "serde_arrays", serde(with = "serde_arrays"))]
     arr: [T; N],
 }
 

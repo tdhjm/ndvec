@@ -15,6 +15,10 @@ use std::ops::SubAssign;
 
 use num_traits::Float;
 use num_traits::Zero;
+#[cfg(feature = "serde")]
+use serde::Deserialize;
+#[cfg(feature = "serde")]
+use serde::Serialize;
 
 use crate::Component;
 use crate::RefComponent;
@@ -25,6 +29,7 @@ macro_rules! declare_vector {
     ($V:ident{$first:ident $(, $rest:ident )*}; $N:literal) => {
         #[doc = concat!($N, "-dimensional vector.")]
         #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
         pub struct $V<T> {
             pub $first: T,
             $(pub $rest: T,)*

@@ -7,6 +7,11 @@
 //!
 //! This crate intentionally does not support operators for element-wise product and so on.
 //!
+//! ## Feature Flags
+//!
+//! + `serde`: activates serialization of [`Vec2D`], [`Vec3D`] etc.
+//! + `serde_arrays`: needed to serialize/deserialize [`VecND`]
+//!
 mod array;
 mod fixed;
 mod general;
